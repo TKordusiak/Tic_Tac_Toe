@@ -1,0 +1,152 @@
+package game;
+
+import java.util.Scanner;
+
+public class TicTacToe {
+
+	 static char board[][]  = {{'.','.','.'},
+			 				   {'.','.','.'},
+			 				   {'.','.','.'}};
+	 
+	static Scanner sc = new Scanner(System.in);
+	static char player = 'X';
+
+	public static void main(String[] args) {
+		System.out.println("Rozpoczynamy grê");
+		System.out.println();
+		
+		while(true) {
+		TicTacToe.printBoard();
+		boolean move = move();
+			if(move) {
+				boolean winLine = checkLinie(board, player);
+				boolean winColumn = checkColumn(board, player);
+				boolean crossRight = checkCrossRight(board, player);;
+				boolean crossLeft = checkCrossLeft(board, player);;
+				if(winLine || winColumn || crossRight) {
+					TicTacToe.printBoard();
+					System.out.println("Wygra³ gracz " + player);
+					break;
+				}
+			}
+		if(player == 'X') {
+			player = 'O';
+		}else {
+			player = 'X';
+		}
+	}
+		
+//			int options = 1;
+//			
+//			System.out.println("Co chcesz zrobiæ:");
+//			System.out.println("1 - Rozpocznij grê");
+//			System.out.println("2 - Koniec");
+//			
+//			options = sc.nextInt();
+//			if(options == 1) {
+//				game();
+//			}else if(options == 2) {
+//				System.out.println("Koniec zabawy");
+//			}
+//			sc.close();
+//				
+	}
+	
+//	private static void game() {
+//
+//	}
+//	
+	private static boolean checkCrossLeft(char[][] board, char player) {
+		
+		
+		if((board[0][2] == board[1][1] && board[2][0] !='.')) {
+			System.out.println("Wygra³ gracz " + player);
+			System.exit(0);
+			
+		}
+
+		return true;
+
+	}
+
+	private static boolean checkCrossRight(char[][] board, char player) {
+		
+		int size = board.length;
+		for(int i=0; i<size; i++) {
+			if(board[i][i] != player) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private static boolean checkColumn(char[][] board, char player) {
+		int size = board.length;
+		for(int column = 0; column<size; column++) {
+			boolean win = true;
+			for(int line = 0; line<size; line++) {
+				if(board[line][column] != player) {
+					win = false;
+					break;
+				}
+			}
+			if(win) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private static boolean checkLinie(char[][] board, char player) {
+		int size = board.length;
+		for(int line = 0; line<size; line++) {
+			boolean win = true;
+			for(int column = 0; column<size; column++) {
+				if(board[line][column] != player) {
+					win = false;
+					break;
+				}
+			}
+			if(win) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public static boolean move() {
+		
+		
+		System.out.println();
+		System.out.println(player+ " Twój ruch");
+		System.out.println("Podaj indeks wiersza");
+		int line =sc.nextInt();
+		System.out.println("Podaj indeks kolumny");
+		int column = sc.nextInt();
+		boolean move = board[line][column] =='.';
+			if(!move) {
+				System.out.println("To pole jest ju¿ zajete");
+				return false;
+			}
+			board[line][column] = player;
+			return true;
+	}
+	
+	public static void printBoard() {
+
+
+		System.out.println("\t0 \t1 \t2");
+		
+		for(int line = 0; line<board.length; line++) {
+			System.out.print(line +"\t");
+			
+			for(int column = 0; column<board[line].length; column++) {
+				System.out.print(board[line][column]+"\t");
+				
+			}
+			System.out.println();
+		}
+
+	}
+
+}
